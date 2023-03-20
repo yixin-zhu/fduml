@@ -6,6 +6,7 @@ import numpy as np
 
 from .linear import LinearModel
 
+
 class SoftmaxClassifier(LinearModel):
     """
     Naive softmax classifier with l2 regularization
@@ -29,14 +30,14 @@ class SoftmaxClassifier(LinearModel):
     seed: (int) random seed
     """
 
-    def __init__(self,learning_rate = 1e-3, reg=1e-5, num_iters=50, batch_size=200,
+    def __init__(self, learning_rate=1e-3, reg=1e-5, num_iters=50, batch_size=200,
                  verbose=False, loss_type='naive', seed=233):
         self.reg = reg
         self.learning_rate = learning_rate
         self.num_iters = num_iters
         self.batch_size = batch_size
         self.verbose = verbose
-        self.loss_type= loss_type
+        self.loss_type = loss_type
         np.random.seed(seed)
 
         self.W = None
@@ -61,7 +62,7 @@ class SoftmaxClassifier(LinearModel):
 
         num_train, dim = X.shape
         num_classes = (
-                np.max(y) + 1
+            np.max(y) + 1
         )  # assume y takes values 0...K-1 where K is number of classes
 
         if self.W is None:
@@ -89,8 +90,6 @@ class SoftmaxClassifier(LinearModel):
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-
-
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
             # evaluate loss and gradient
@@ -107,16 +106,14 @@ class SoftmaxClassifier(LinearModel):
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-
-
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
             if self.verbose and it % 100 == 0:
-                print("iteration %d / %d: loss %f" % (it, self.num_iters, loss))
+                print("iteration %d / %d: loss %f" %
+                      (it, self.num_iters, loss))
 
         self.W = best_W
         return self
-
 
     def predict(self, X):
         """
@@ -141,7 +138,6 @@ class SoftmaxClassifier(LinearModel):
         # Implement this method. Store the predicted labels in y_pred.            #
         ###########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return y_pred
@@ -174,7 +170,6 @@ class SoftmaxClassifier(LinearModel):
         else:
             raise NotImplementedError
 
-
     def softmax_loss_naive(self, W, X, y, reg):
         """
         Softmax loss function, naive implementation (with loops)
@@ -202,12 +197,9 @@ class SoftmaxClassifier(LinearModel):
         #############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-
-
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
         return loss, dW
-
 
     def softmax_loss_vectorized(self, W, X, y, reg):
         """
@@ -225,8 +217,6 @@ class SoftmaxClassifier(LinearModel):
         # regularization!                                                           #
         #############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 

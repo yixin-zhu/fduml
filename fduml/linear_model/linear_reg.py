@@ -4,6 +4,7 @@ Linear Regression
 import numpy as np
 from .linear import LinearModel
 
+
 class LinearRegression(LinearModel):
     """
     Ordinary least squares Linear Regression.
@@ -54,13 +55,23 @@ class LinearRegression(LinearModel):
         # in the self.coef_. and self.intercept_ respectively.                    #
         #                                                                         #
         # Notice:                                                                 #
-        # You can NOT use the linear algebra lib 'numpy.linalg' of numpy.         #
         # Do not forget the self.reg_ item.                                       #
         ###########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+        # Add a column of ones to X for the intercept term
+        X_ = np.hstack((np.ones((X.shape[0], 1)), X))
 
-        pass
+        # Calculate coefficients using closed-form solution
+        XtX = X_.T.dot(X_)
+        if (np.linalg.matrix_rank(XtX) < min(XtX.shape[0], XtX.shape[1])):
+            self.reg_ = 1.0
+        XtX_reg = XtX + self.reg_ * np.identity(XtX.shape[0])
+        XtY = X_.T.dot(y)
+        self.coef_ = (np.linalg.solve(XtX_reg, XtY)[1:])
+        self.coef_ = self.coef_.reshape(self.coef_.shape[0])
 
+        # Calculate intercept
+        self.intercept_ = np.linalg.solve(XtX_reg, XtY)[0]
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         assert self.coef_ is not None
         assert self.intercept_ is not None
@@ -85,8 +96,7 @@ class LinearRegression(LinearModel):
         # Implement this method. Store the predicted values in y_pred.            #
         ###########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-        pass
-
+        y_pred = X.dot(self.coef_) + self.intercept_
+        y_pred = y_pred.reshape(y_pred.shape[0], 1)
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return y_pred

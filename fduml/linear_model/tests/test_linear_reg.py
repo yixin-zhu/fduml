@@ -6,6 +6,7 @@ import numpy as np
 from numpy.testing import assert_array_almost_equal
 from fduml.linear_model import LinearRegression
 
+
 def test_linear_regression():
     # Test LinearRegression on a simple dataset.
     # a simple dataset
@@ -29,3 +30,5 @@ def test_linear_regression():
     assert_array_almost_equal(reg.intercept_, [0])
     assert_array_almost_equal(reg.predict(X), Y)
 
+
+test_linear_regression()
