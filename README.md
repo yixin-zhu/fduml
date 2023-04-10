@@ -30,15 +30,15 @@ Course website for PRML Spring 2023 at Fudan University ([Github Link](https://g
 |03/20 | | H3204 |Assignment 1: Machine Learning with Tabular Data| |
 |03/27 |Lecture 5: Kernel Method and SVM | Online |Exercise 5: SVM| |
 |04/03 |Lecture 6: Clustering and Dimension Reduction | Online |Exercise 6: Clustering| |
-|04/09 | | | | Assignment1 <font color="red">due</font>|
-|04/10 |Lecture 7: Neural Networks | Online |Exercise 7: Neural Networks| |
-|04/16 |  |  |  | Final PJ Proposal  |
-|04/17 |Lecture 8: CNNs | Online  |Exercise 8: CNNs| |
-|04/24 | | H3204 |Assignment 2: Deep Learning with Image Data| |
+|04/10 |ML Revision and QA  | H3204 | | |
+|04/16 |  |  |  | Assignment1 <font color="red">due</font> |
+|04/17 |Lecture 7: Neural Networks | Online |Exercise 7: Neural Networks| |
+|04/24 |Lecture 8: CNNs | Online  |Exercise 8: CNNs|  Final PJ Proposal|
 |05/01 | |  |Cancelled for the Labor Day| |
-|05/08 |Lecture 9: RNNs | Online |Exercise 9: RNNs| |
-|05/15 |Lecture 10: SANs | Online |Exercise 9: SANs| |
-|05/22 | | H3204 |Assignment 3: Deep Learning with Multimodal Data| |
+|05/08 | | H3204 |Assignment 2: Deep Learning with Image Data| |
+|05/15 |Lecture 9: RNNs | Online |Exercise 9: RNNs| |
+|05/22 |Lecture 10: SANs | Online |Exercise 9: SANs| |
+|05/29 | | H3204 |Assignment 3: Deep Learning with Multimodal Data| |
 
 ## Coursework
 Programming practice is an important part of this course. 
@@ -52,7 +52,7 @@ We have carefully prepared some assignments for you, we believe these assignment
 - Learn more about optimization and generalization
 - Play with real-world tabular dataset
 
-*DDL: 2023.04.09 23:59*
+*DDL: 2023.04.16 23:59*
 
 ### Assignment 2: Deep Learning with Image Data (20%)
 - Build your own toy deep learning library
