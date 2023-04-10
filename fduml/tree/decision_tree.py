@@ -3,6 +3,7 @@ from collections import Counter
 
 from .criterion import get_criterion_function
 
+
 class node:
     def __init__(self,
                  feat_idx=None,
@@ -58,6 +59,7 @@ class DecisionTreeClassifier(object):
     random_state : int, RandomState instance or None, default=None
         Controls the randomness of the estimator.
     """
+
     def __init__(self,
                  criterion="info_gain",
                  splitter="best",
@@ -102,7 +104,7 @@ class DecisionTreeClassifier(object):
         # normalize feature scores
         if self.feature_scores_.sum() != 0.0:
             self.feature_importances_ = (
-                    self.feature_scores_ / self.feature_scores_.sum())
+                self.feature_scores_ / self.feature_scores_.sum())
         else:
             self.feature_importances_ = np.zeros(X.shape[1], dtype=float)
 
@@ -123,7 +125,8 @@ class DecisionTreeClassifier(object):
         leaf_num_before = self.tree_leaf_num
         if split_score > self.min_impurity_split:
             left = self._build_tree(split["l_X"], split["l_y"], curr_depth + 1)
-            right = self._build_tree(split["r_X"], split["r_y"], curr_depth + 1)
+            right = self._build_tree(
+                split["r_X"], split["r_y"], curr_depth + 1)
             self.feature_scores_[split["feat_idx"]] += split_score
             return node(feat_idx=split["feat_idx"], threshold=split["threshold"],
                         split_score=split_score, left=left, right=right,

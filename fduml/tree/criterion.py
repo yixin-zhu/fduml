@@ -3,6 +3,8 @@ criterion
 """
 
 import math
+import numpy as np
+
 
 def get_criterion_function(criterion):
     if criterion == "info_gain":
@@ -35,6 +37,7 @@ def __label_stat(y, l_y, r_y):
 
     return all_labels, left_labels, right_labels
 
+
 def __info_gain(y, l_y, r_y):
     """
     Calculate the info gain
@@ -49,9 +52,15 @@ def __info_gain(y, l_y, r_y):
     # l_y and r_y                                                             #
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+    def __entropy(d):
+        total = sum(d.values())
+        probs = [count / total for count in d.values()]
+        return -sum(p * math.log2(p) for p in probs if p > 0)
 
-    pass
-
+    origin = __entropy(all_labels)
+    left = __entropy(left_labels)
+    right = __entropy(right_labels)
+    info_gain = origin - (left + right)
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
     return info_gain
@@ -71,8 +80,15 @@ def __info_gain_ratio(y, l_y, r_y):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    def __split_info(left, right):
+        length = [len(left), len(right)]
+        n = sum(length)
+        return -sum((p / n) * math.log2(p / n) for p in length if p > 0)
 
+    split_info = __split_info(l_y, r_y)
+    if (split_info == 0):
+        return 0
+    info_gain = info_gain / split_info
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     return info_gain
 
@@ -91,8 +107,13 @@ def __gini_index(y, l_y, r_y):
     # after splitting y into l_y and r_y                                      #
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+    def __gini(d):
+        total = sum(d.values())
+        probs = [count / total for count in d.values()]
+        return 1 - sum(p ** 2 for p in probs)
 
-    pass
+    before = __gini(all_labels)
+    after = __gini(left_labels) + __gini(right_labels)
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     return before - after
@@ -108,8 +129,13 @@ def __error_rate(y, l_y, r_y):
     # after splitting y into l_y and r_y                                      #
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+    def __error(d):
+        if len(d) == 0:
+            return 0
+        total = sum(d.values())
+        return 1 - max(d.values()) / total
 
-    pass
-
+    before = __error(all_labels)
+    after = __error(left_labels) + __error(right_labels)
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     return before - after

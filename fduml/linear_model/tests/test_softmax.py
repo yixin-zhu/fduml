@@ -5,6 +5,7 @@ import numpy as np
 from numpy.testing import assert_array_equal
 from fduml.linear_model import SoftmaxClassifier
 
+
 def test_softmax():
     """Check that the model is able to fit the classification data"""
     X = np.array([[-1, 0], [0, 1], [1, 1]])
@@ -24,3 +25,6 @@ def test_softmax():
 
     assert predicted.shape == (n_samples,)
     assert_array_equal(predicted, y)
+
+
+test_softmax()

@@ -4,6 +4,7 @@ metrics of classification
 
 import numpy as np
 
+
 def accuracy_score(y_true, y_pred):
     """Accuracy classification score.
     In multilabel classification, this function computes subset accuracy:
@@ -28,7 +29,6 @@ def accuracy_score(y_true, y_pred):
     # Calculate the accuracy.                                               #
     #########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-
+    acc = np.mean(y_true == y_pred)
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     return acc

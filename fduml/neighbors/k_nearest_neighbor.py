@@ -3,6 +3,7 @@ K-nearest Neighbor Algorithm
 """
 import numpy as np
 
+
 class KNeighborsClassifier(object):
     """
     Classifier implementing the k-nearest neighbors vote with L2 distance.
@@ -16,7 +17,7 @@ class KNeighborsClassifier(object):
         Determines which implementation to use to compute distances between training points and testing points.
     """
 
-    def __init__(self, n_neighbors=5, num_loops = 0):
+    def __init__(self, n_neighbors=5, num_loops=0):
         self.k = n_neighbors
         self.num_loops = num_loops
 
@@ -44,9 +45,8 @@ class KNeighborsClassifier(object):
         # self.X_train and self.y_train directly                                  #
         ###########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-        pass
-
+        self.X_train = X
+        self.y_train = y
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return self
 
@@ -103,9 +103,7 @@ class KNeighborsClassifier(object):
                 # not use a loop over dimension, nor use np.linalg.norm().          #
                 #####################################################################
                 # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-                pass
-
+                dists[i][j] = np.sqrt(np.sum(np.square(X[i] - self.X_train[j])))
                 # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
 
@@ -126,8 +124,8 @@ class KNeighborsClassifier(object):
             # Do not use np.linalg.norm().                                        #
             #######################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-            pass
+            # use broadcasting
+            dists[i] = np.sqrt(np.sum(np.square(X[i] - self.X_train), axis=1))
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
@@ -155,8 +153,7 @@ class KNeighborsClassifier(object):
         #       and two broadcast sums.                                         #
         #########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-        pass
+        dists = np.sqrt(np.sum((X[:, np.newaxis] - self.X_train)**2, axis=2))
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
@@ -190,8 +187,7 @@ class KNeighborsClassifier(object):
             # Hint: Look up the function numpy.argsort.                             #
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-            pass
+            closest_y = self.y_train[np.argsort(dists[i])[:self.k]]
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
             ##########################################################################
@@ -202,9 +198,7 @@ class KNeighborsClassifier(object):
             # the smaller label.                                                     #
             ##########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-
-
+            y_pred[i] = np.argmax(np.bincount(closest_y))
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
         return y_pred

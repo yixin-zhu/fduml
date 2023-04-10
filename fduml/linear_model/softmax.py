@@ -89,7 +89,10 @@ class SoftmaxClassifier(LinearModel):
             # replacement is faster than sampling without replacement.              #
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
+            indices = np.random.choice(
+                num_train, self.batch_size, replace=True)
+            X_batch = X[indices]
+            y_batch = y[indices]
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
             # evaluate loss and gradient
@@ -105,7 +108,7 @@ class SoftmaxClassifier(LinearModel):
             # Update the weights using the gradient and the learning rate.          #
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
+            self.W -= self.learning_rate * grad
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
             if self.verbose and it % 100 == 0:
@@ -138,7 +141,7 @@ class SoftmaxClassifier(LinearModel):
         # Implement this method. Store the predicted labels in y_pred.            #
         ###########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
+        y_pred = np.argmax(X.dot(self.W), axis=1)
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return y_pred
 
@@ -196,7 +199,21 @@ class SoftmaxClassifier(LinearModel):
         # regularization!                                                           #
         #############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+        num_train = X.shape[0]
+        num_classes = W.shape[1]
 
+        for i in range(num_train):
+            scores = X[i].dot(W)
+            scores -= np.max(scores)  # for numerical stability
+            p = np.exp(scores) / np.sum(np.exp(scores))
+            loss += -np.log(p[y[i]])
+            for j in range(num_classes):
+                dW[:, j] += (p[j] - (j == y[i])) * X[i]
+
+        loss /= num_train
+        loss += reg * np.sum(W * W)
+        dW /= num_train
+        dW += 2 * reg * W
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
         return loss, dW
@@ -217,7 +234,18 @@ class SoftmaxClassifier(LinearModel):
         # regularization!                                                           #
         #############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+        num_train = X.shape[0]
+        scores = X.dot(W)
+        scores -= np.max(scores, axis=1, keepdims=True)
+        p = np.exp(scores) / np.sum(np.exp(scores), axis=1, keepdims=True)
+        loss = np.sum(-np.log(p[np.arange(num_train), y]))
 
+        loss /= num_train
+        loss += reg * np.sum(W * W)
+        p[np.arange(num_train), y] -= 1
+        dW = X.T.dot(p)
+        dW /= num_train
+        dW += 2 * reg * W
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
         return loss, dW
