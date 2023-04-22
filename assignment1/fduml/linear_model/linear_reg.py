@@ -63,6 +63,7 @@ class LinearRegression(LinearModel):
 
         # Calculate coefficients using closed-form solution
         XtX = X_.T.dot(X_)
+        # no enough rank, redge regression
         if (np.linalg.matrix_rank(XtX) < min(XtX.shape[0], XtX.shape[1])):
             self.reg_ = 1.0
         XtX_reg = XtX + self.reg_ * np.identity(XtX.shape[0])

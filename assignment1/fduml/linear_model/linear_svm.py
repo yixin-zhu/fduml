@@ -6,6 +6,7 @@ import numpy as np
 
 from .linear import LinearModel
 
+
 class LinearSVMClassifier(LinearModel):
     """
     Linear SVM classifier with l2 regularization
@@ -29,14 +30,14 @@ class LinearSVMClassifier(LinearModel):
     seed: (int) random seed
     """
 
-    def __init__(self,learning_rate = 1e-3, reg=1e-5, num_iters=50, batch_size=200,
+    def __init__(self, learning_rate=1e-3, reg=1e-5, num_iters=50, batch_size=200,
                  verbose=False, loss_type='naive', seed=233):
         self.reg = reg
         self.learning_rate = learning_rate
         self.num_iters = num_iters
         self.batch_size = batch_size
         self.verbose = verbose
-        self.loss_type= loss_type
+        self.loss_type = loss_type
         np.random.seed(seed)
 
         self.W = None
@@ -61,7 +62,7 @@ class LinearSVMClassifier(LinearModel):
 
         num_train, dim = X.shape
         num_classes = (
-                np.max(y) + 1
+            np.max(y) + 1
         )  # assume y takes values 0...K-1 where K is number of classes
 
         if self.W is None:
@@ -112,11 +113,11 @@ class LinearSVMClassifier(LinearModel):
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
             if self.verbose and it % 100 == 0:
-                print("iteration %d / %d: loss %f" % (it, self.num_iters, loss))
+                print("iteration %d / %d: loss %f" %
+                      (it, self.num_iters, loss))
 
         self.W = best_W
         return self
-
 
     def predict(self, X):
         """
@@ -175,7 +176,6 @@ class LinearSVMClassifier(LinearModel):
         else:
             raise NotImplementedError
 
-
     def svm_loss_naive(self, W, X, y, reg):
         """
         Structured SVM loss function, naive implementation (with loops).
@@ -191,7 +191,7 @@ class LinearSVMClassifier(LinearModel):
         - loss as single float
         - gradient with respect to weights W; an array of same shape as W
         """
-        dW = np.zeros(W.shape) # initialize the gradient as zero
+        dW = np.zeros(W.shape)  # initialize the gradient as zero
 
         # compute the loss and the gradient
         num_classes = W.shape[1]
@@ -203,7 +203,7 @@ class LinearSVMClassifier(LinearModel):
             for j in range(num_classes):
                 if j == y[i]:
                     continue
-                margin = scores[j] - correct_class_score + 1 # note delta = 1
+                margin = scores[j] - correct_class_score + 1  # note delta = 1
                 if margin > 0:
                     loss += margin
 
@@ -241,7 +241,6 @@ class LinearSVMClassifier(LinearModel):
 
         return loss, dW
 
-
     def svm_loss_vectorized(self, W, X, y, reg):
         """
         Structured SVM loss function, vectorized implementation.
@@ -259,7 +258,7 @@ class LinearSVMClassifier(LinearModel):
         - gradient with respect to weights W; an array of same shape as W
         """
         loss = 0.0
-        dW = np.zeros(W.shape) # initialize the gradient as zero
+        dW = np.zeros(W.shape)  # initialize the gradient as zero
 
         #############################################################################
         # TODO:                                                                     #

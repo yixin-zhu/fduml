@@ -5,6 +5,7 @@ import numpy as np
 from numpy.testing import assert_array_equal
 from fduml.linear_model import LinearSVMClassifier
 
+
 def test_linear_svm():
     """Check that the model is able to fit the classification data"""
     X = np.array([[-1, 0], [0, 1], [1, 1]])
@@ -24,3 +25,7 @@ def test_linear_svm():
 
     assert predicted.shape == (n_samples,)
     assert_array_equal(predicted, y)
+    print("test_linear_svm passed")
+
+
+test_linear_svm()

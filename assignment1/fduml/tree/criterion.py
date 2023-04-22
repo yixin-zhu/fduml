@@ -4,6 +4,8 @@ criterion
 
 import math
 import numpy as np
+from scipy.stats import entropy
+
 
 
 def get_criterion_function(criterion):
@@ -57,9 +59,9 @@ def __info_gain(y, l_y, r_y):
         probs = [count / total for count in d.values()]
         return -sum(p * math.log2(p) for p in probs if p > 0)
 
-    origin = __entropy(all_labels)
-    left = __entropy(left_labels)
-    right = __entropy(right_labels)
+    origin = entropy(list(all_labels.values()))
+    left = entropy(list(left_labels.values())) * len(l_y) / len(y)
+    right = entropy(list(right_labels.values())) * len(r_y) / len(y)
     info_gain = origin - (left + right)
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 

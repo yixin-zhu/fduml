@@ -4,6 +4,7 @@ Linear Model
 
 from abc import abstractmethod
 
+
 class LinearModel(object):
     """Base class for Linear Models"""
 

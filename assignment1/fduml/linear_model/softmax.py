@@ -207,13 +207,14 @@ class SoftmaxClassifier(LinearModel):
             scores -= np.max(scores)  # for numerical stability
             p = np.exp(scores) / np.sum(np.exp(scores))
             loss += -np.log(p[y[i]])
-            for j in range(num_classes):
-                dW[:, j] += (p[j] - (j == y[i])) * X[i]
+            dscores = p
+            dscores[y[i]] -= 1
+            dW += np.outer(X[i], dscores)
 
         loss /= num_train
-        loss += reg * np.sum(W * W)
+        loss += 0.5 * reg * np.sum(W * W)
         dW /= num_train
-        dW += 2 * reg * W
+        dW += reg * W
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
         return loss, dW

@@ -40,6 +40,7 @@ def test_dt_classification():
     dt_clf.fit(X, y)
     assert_array_equal(dt_clf.predict(T), true_result,
                        "Failed with {}".format(criterion))
+    print("test_dt_classification passed")
 
 
 test_dt_classification()
